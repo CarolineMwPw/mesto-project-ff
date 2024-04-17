@@ -12,33 +12,32 @@ const cardImage = document.querySelector(".card__image");
 const cardDescription = document.querySelector(".card__description");
 const cardName = document.querySelector(".card__title");
 
-// cloneCards(initialCards);
+function createCard(card, deleteCard) {
+  const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
 
-// function cloneCards(array) {
-//   for (let i = 0; i < array.length; i = i + 1) {
-//     let cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
-
-// cardItem.querySelector(".card__image").src = array[i].link;
-// cardItem.querySelector(".card__title").textContent = array[i].name;
-// placesContainer.append(cardItem);
-//   }
-// }
-
-initialCards.forEach(function (card) {
-  let cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
   cardItem.querySelector(".card__image").src = card.link;
+  cardItem.querySelector(".card__image").alt = card.name.toUpperCase();
 
   cardItem.querySelector(".card__title").textContent = card.name;
-  cardItem
-    .querySelector(".card__delete-button")
-    .addEventListener("click", function (evt) {
-      evt.target.parentElement.remove(cardItem);
-    });
 
-  placesContainer.append(cardItem);
+  const delButton = cardItem.querySelector(".card__delete-button");
+
+  delButton.addEventListener("click", deleteCard);
+
+  return cardItem;
+}
+
+// @todo: Функция удаления карточки
+
+function deleteCard(evt) {
+  evt.target.closest("li").remove();
+}
+
+// @todo: Вывести карточки на страницу
+
+initialCards.forEach(function (card) {
+  placesContainer.append(createCard(card, deleteCard));
 });
-
-const delButton = document.querySelector(".card__delete-button");
 
 const likeButton = document.querySelector(".card__like-button");
 
@@ -59,12 +58,14 @@ function add(linkValue, nameValue) {
 
   newItem.querySelector(".card__title").textContent = nameValue;
 
+  newItem.querySelector(".card__image").alt = nameValue.toUpperCase();
+
   newItem.querySelector(".card__image").src = linkValue;
 
   newItem
     .querySelector(".card__delete-button")
     .addEventListener("click", function (evt) {
-      evt.target.parentElement.remove();
+      evt.target.closest("li").remove();
     });
 
   placesContainer.append(newItem);
@@ -108,14 +109,6 @@ function close() {
     .querySelector(".popup_is-opened")
     .classList.remove("popup_is-opened");
 }
-
-// closePopup.addEventListener('click', function(evt) {
-//   evt.target.classList.toggle('card__like-button');
-//   });
-
-// @todo: Функция удаления карточки
-
-// @todo: Вывести карточки на страницу
 
 //  info for cheking newcard adding
 // Neapol
