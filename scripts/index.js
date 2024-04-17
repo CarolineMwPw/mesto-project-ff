@@ -28,9 +28,6 @@ initialCards.forEach(function (card) {
   let cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
   cardItem.querySelector(".card__image").src = card.link;
 
-  console.log(card.link);
-  console.log((cardItem.querySelector(".card__image").src = card.link));
-
   cardItem.querySelector(".card__title").textContent = card.name;
   cardItem
     .querySelector(".card__delete-button")
@@ -72,8 +69,6 @@ function add(linkValue, nameValue) {
 
   placesContainer.append(newItem);
   initialCards.push({ name: nameValue, link: linkValue });
-  console.log(initialCards);
-  console.log(newItem);
 }
 
 saveCardButton.addEventListener("click", function () {
@@ -101,7 +96,6 @@ const closeEditProfile = popupEditProfile.querySelector(".popup__close");
 
 closeEditProfile.addEventListener("click", function () {
   close();
-  console.log(closeNewCard.parentElement.classList);
 });
 
 closeNewCard.addEventListener("click", function () {
