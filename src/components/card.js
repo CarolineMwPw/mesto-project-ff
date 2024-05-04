@@ -6,12 +6,13 @@ import {
   cardTemplate,
   popupNewCard,
   popUpImage,
-  imageOpen,
+  openImage,
+  handleCardAdd,
 } from "..";
 
-import { closeIt } from "./modal";
+import { closeModal } from "./modal";
 
-export function createCard(card, deleteCard, likeCount, imageOpen) {
+export function createCard(card, deleteCard, toggleLike, openImage) {
   const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
 
   cardItem.querySelector(".card__image").src = card.link;
@@ -23,30 +24,15 @@ export function createCard(card, deleteCard, likeCount, imageOpen) {
 
   delButton.addEventListener("click", deleteCard);
 
-  placesContainer.addEventListener("click", likeCount);
+  const likeButton = cardItem.querySelector(".card__like-button");
 
-  placesContainer.addEventListener("click", imageOpen);
+  likeButton.addEventListener("click", toggleLike);
+
+  const cardImage = cardItem.querySelector(".card__image");
+
+  cardImage.addEventListener("click", openImage);
 
   return cardItem;
-}
-
-// Функция добавления новой карточки
-
-export function handleCardAdd(evt) {
-  evt.preventDefault();
-  const cardName = popupNewCard.querySelector(".popup__input_type_card-name");
-  const cardLink = popupNewCard.querySelector(".popup__input_type_url");
-  const newCard = {
-    name: cardName.value,
-    link: cardLink.value,
-  };
-
-  placesContainer.prepend(
-    createCard(newCard, deleteCard, likeCount, imageOpen)
-  );
-  cardLink.value = "";
-  cardName.value = "";
-  closeIt(evt.target);
 }
 
 // @todo: Функция удаления карточки
@@ -57,9 +43,8 @@ export function deleteCard(evt) {
 
 // Like Функция
 
-// placesContainer.addEventListener("click", likeCount);
-
-export function likeCount(evt) {
+export function toggleLike(evt) {
+  console.log(evt.target);
   if (evt.target.classList.contains("card__like-button")) {
     evt.target.classList.toggle("card__like-button_is-active");
   }

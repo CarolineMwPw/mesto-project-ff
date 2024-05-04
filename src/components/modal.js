@@ -1,7 +1,5 @@
 // Функция открытия карточки
 
-import { popUpImage, imageOpen } from "..";
-
 export function openModal(window) {
   window.classList.add("popup_is-opened");
 
@@ -10,12 +8,10 @@ export function openModal(window) {
 
 // Логика закрытия попапов
 
-export function closeIt() {
-  document.querySelector(".popup_is-opened").classList.add("popup_is-animated");
+export function closeModal(window) {
+  window.classList.add("popup_is-animated");
 
-  document
-    .querySelector(".popup_is-opened")
-    .classList.remove("popup_is-opened");
+  window.classList.remove("popup_is-opened");
 
   document.removeEventListener("keydown", keyPress);
 }
@@ -24,25 +20,20 @@ export function closeIt() {
 
 export function keyPress(evt) {
   if (evt.key === "Escape") {
-    closeIt();
+    const openedPopUp = document.querySelector(".popup_is-opened");
+    closeModal(openedPopUp);
   }
 }
 
-// Выбор попапов для функции закрытия при нажатии оверлея либо кнопки закрытия
-
-export const popUps = document.querySelectorAll(".popup");
-
 // Закрытие попапов при нажатии оверлея либо кнопки закрытия
 
-popUps.forEach(function (popUp) {
-  popUp.addEventListener("click", function (evt) {
+export function closePopupByOverlay(item) {
+  item.addEventListener("click", function (evt) {
     if (
-      evt.target === popUp ||
-      evt.target === popUp.querySelector(".popup__close")
-      // evt.target.style.hasOwnProperty("backgroundColor") ||
-      // evt.contains(".popup__close")
+      evt.target.classList.contains("popup") ||
+      evt.target === item.querySelector(".popup__close")
     ) {
-      closeIt(popUp);
+      closeModal(item);
     }
   });
-});
+}

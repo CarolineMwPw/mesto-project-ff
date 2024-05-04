@@ -1,14 +1,14 @@
 import "./pages/index.css";
 import { initialCards } from "./scripts/cards.js";
 
-import {
-  createCard,
-  handleCardAdd,
-  deleteCard,
-  likeCount,
-} from "./components/card.js";
+import { createCard, deleteCard, toggleLike } from "./components/card.js";
 
-import { openModal, closeIt, keyPress, popUps } from "./components/modal.js";
+import {
+  openModal,
+  closeModal,
+  keyPress,
+  closePopupByOverlay,
+} from "./components/modal.js";
 
 // @todo: DOM узлы
 
@@ -22,14 +22,14 @@ const addButton = mainContent.querySelector(".profile__add-button");
 
 export const cardTemplate = document.querySelector("#card-template").content;
 
-const cardImage = document.querySelector(".card__image");
-const cardDescription = document.querySelector(".card__description");
-const cardName = document.querySelector(".card__title");
+// const cardImage = document.querySelector(".card__image");
+// const cardDescription = document.querySelector(".card__description");
+// const cardName = document.querySelector(".card__title");
 
 // @todo: Вывести карточки на страницу
 
 initialCards.forEach(function (card) {
-  placesContainer.append(createCard(card, deleteCard, likeCount, imageOpen));
+  placesContainer.append(createCard(card, deleteCard, toggleLike, openImage));
 });
 
 // Обработчик открытия окна новой карточки
@@ -40,15 +40,31 @@ addButton.addEventListener("click", function () {
   openModal(popupNewCard);
 });
 
-// addButton.addEventListener("click", function () {
-//   popupNewCard.classList.add("popup_is-opened");
-
-//   document.addEventListener("keydown", keyPress);
-// });
-
 // Обработчик добавления новой карточки
 
 popupNewCard.addEventListener("submit", handleCardAdd);
+
+// Функция добавления новой карточки
+
+export function handleCardAdd(evt) {
+  evt.preventDefault();
+  const cardName = popupNewCard.querySelector(".popup__input_type_card-name");
+  const cardLink = popupNewCard.querySelector(".popup__input_type_url");
+  const newCard = {
+    name: cardName.value,
+    link: cardLink.value,
+  };
+
+  placesContainer.prepend(
+    createCard(newCard, deleteCard, toggleLike, openImage)
+  );
+
+  evt.target.reset();
+
+  const openedPopUp = document.querySelector(".popup_is-opened");
+
+  closeModal(openedPopUp);
+}
 
 // Профиль
 
@@ -64,18 +80,16 @@ editButton.addEventListener("click", function () {
   jobInput.value = document.querySelector(".profile__description").textContent;
 
   openModal(popupEditProfile);
-  // popupEditProfile.classList.add("popup_is-opened");
-  // document.addEventListener("keydown", keyPress);
 });
 
 // Функция редактирования профиля
 
-const formElement = popupEditProfile.querySelector(".popup__form");
+const formProfile = popupEditProfile.querySelector(".popup__form");
 
-const nameInput = formElement.querySelector(".popup__input_type_name");
-const jobInput = formElement.querySelector(".popup__input_type_description");
+const nameInput = formProfile.querySelector(".popup__input_type_name");
+const jobInput = formProfile.querySelector(".popup__input_type_description");
 
-function handleFormSubmit(evt) {
+function handleFormProfileSubmit(evt) {
   evt.preventDefault();
 
   const name = document.querySelector(".profile__title");
@@ -84,31 +98,34 @@ function handleFormSubmit(evt) {
   name.textContent = nameInput.value;
   job.textContent = jobInput.value;
 
-  closeIt();
+  const openedPopUp = document.querySelector(".popup_is-opened");
+
+  closeModal(openedPopUp);
 }
 
-formElement.addEventListener("submit", handleFormSubmit);
+formProfile.addEventListener("submit", handleFormProfileSubmit);
 
 // Открытие попапа с картинкой
 
 export const popUpImage = document.querySelector(".popup_type_image");
 
-// const places = document.querySelector(".places");
-
-// places.addEventListener("click", imageOpen);
-
-export function imageOpen(event) {
-  document.addEventListener("keydown", keyPress);
-
+export function openImage(event) {
   if (event.target.classList.contains("card__image")) {
     openModal(popUpImage);
-    // popUpImage.classList.add("popup_is-opened");
 
     popUpImage.querySelector(".popup__image").src = event.target.src;
     popUpImage.querySelector(".popup__caption").textContent = event.target.alt;
     popUpImage.querySelector(".popup__image").alt = event.target.alt;
   }
 }
+
+// Выбор попапов для функции закрытия при нажатии оверлея либо кнопки закрытия
+
+const popUps = document.querySelectorAll(".popup");
+
+popUps.forEach(function (popUp) {
+  closePopupByOverlay(popUp);
+});
 
 //  info for cheking newcard adding
 // Neapol
