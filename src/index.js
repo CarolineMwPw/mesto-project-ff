@@ -106,13 +106,13 @@ formProfile.addEventListener("submit", handleFormProfileSubmit);
 export const popUpImage = document.querySelector(".popup_type_image");
 
 export function openImage(event) {
-  if (event.target.classList.contains("card__image")) {
-    openModal(popUpImage);
+  // if (event.target.classList.contains("card__image")) {
+  openModal(popUpImage);
 
-    popUpImage.querySelector(".popup__image").src = event.target.src;
-    popUpImage.querySelector(".popup__caption").textContent = event.target.alt;
-    popUpImage.querySelector(".popup__image").alt = event.target.alt;
-  }
+  popUpImage.querySelector(".popup__image").src = event.target.src;
+  popUpImage.querySelector(".popup__caption").textContent = event.target.alt;
+  popUpImage.querySelector(".popup__image").alt = event.target.alt;
+  // }
 }
 
 // Выбор попапов для функции закрытия при нажатии оверлея либо кнопки закрытия
@@ -120,7 +120,7 @@ export function openImage(event) {
 const popUps = document.querySelectorAll(".popup");
 
 popUps.forEach(function (popUp) {
-  closePopupByOverlay(popUp);
+  popUp.addEventListener("click", closePopupByOverlay);
 });
 
 //  info for cheking newcard adding

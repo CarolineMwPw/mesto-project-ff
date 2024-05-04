@@ -27,13 +27,13 @@ export function keyPress(evt) {
 
 // Закрытие попапов при нажатии оверлея либо кнопки закрытия
 
-export function closePopupByOverlay(item) {
-  item.addEventListener("click", function (evt) {
-    if (
-      evt.target.classList.contains("popup") ||
-      evt.target === item.querySelector(".popup__close")
-    ) {
-      closeModal(item);
-    }
-  });
+export function closePopupByOverlay(evt) {
+  // item.addEventListener("click", function (evt) {
+  if (
+    evt.target.classList.contains("popup") ||
+    evt.target === item.querySelector(".popup__close")
+  ) {
+    closeModal(evt.currentTarget);
+  }
+  // });
 }
