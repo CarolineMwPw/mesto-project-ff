@@ -22,10 +22,6 @@ const addButton = mainContent.querySelector(".profile__add-button");
 
 export const cardTemplate = document.querySelector("#card-template").content;
 
-// const cardImage = document.querySelector(".card__image");
-// const cardDescription = document.querySelector(".card__description");
-// const cardName = document.querySelector(".card__title");
-
 // @todo: Вывести карточки на страницу
 
 initialCards.forEach(function (card) {
