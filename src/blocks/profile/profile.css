@@ -1,12 +1,12 @@
-@import url('./__description/profile__description.css');
-@import url('./__add-button/profile__add-button.css');
-@import url('./__edit-button/profile__edit-button.css');
-@import url('./__info/profile__info.css');
-@import url('./__title/profile__title.css');
-@import url('./__image/profile__image.css');
+@import url("./__description/profile__description.css");
+@import url("./__add-button/profile__add-button.css");
+@import url("./__edit-button/profile__edit-button.css");
+@import url("./__info/profile__info.css");
+@import url("./__title/profile__title.css");
+@import url("./__image/profile__image.css");
 
 .profile {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   color: #fff;
   display: flex;
   align-items: center;
@@ -19,4 +19,43 @@
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* nachinaetsya */
+
+.popup__input:invalid ~ .popup__button_disabled {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.15);
+  background-color: transparent;
+  /* color: #F6F6F6;
+
+  opacity: 0.2; */
+}
+
+.profile__image_edit {
+  background: transparent;
+  display: flex;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.profile__image_edit:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.profile__image_edit:hover img {
+  /* color: #fff; */
+  opacity: 1;
+  /* width: 26px;
+  height: 26px; */
+}
+
+.profile__image_edit img {
+  opacity: 0;
+  transition: 0.3s;
 }

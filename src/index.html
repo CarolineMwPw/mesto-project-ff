@@ -23,7 +23,15 @@
           <div
             class="profile__image"
             style="background-image: url('<%=require('./images/avatar.jpg')%>')"
-          ></div>
+          >
+            <div class="profile__image_edit">
+              <img
+                class="pointer_svg"
+                src="<%=require('../src/images/pointer.svg')%>"
+                alt="pointer_to_edit"
+              />
+            </div>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button
@@ -50,23 +58,35 @@
         <div class="popup__content">
           <button aria-label="Open" type="button" class="popup__close"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="popup__form" name="edit-profile">
+          <form novalidate class="popup__form" name="edit-profile">
             <input
+              required
+              pattern="[a-zA-Z\s\-а-яёА-ЯË]*"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
+              minlength="2"
+              maxlength="40"
               aria-label="Name"
               type="text"
               name="name"
               class="popup__input popup__input_type_name"
               placeholder="Имя"
-              required
+              id="name-input"
             />
+            <span class="form__input-error name-input-error"></span>
             <input
+              required
+              pattern="[a-zA-Z\s\-а-яёА-ЯË]*"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
+              minlength="2"
+              maxlength="200"
               aria-label="Hobby"
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
               placeholder="Занятие"
-              required
+              id="hobby-input"
             />
+            <span class="form__input-error hobby-input-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -81,7 +101,7 @@
             class="popup__close"
           ></button>
           <h3 class="popup__title">Новое место</h3>
-          <form class="popup__form" name="new-place">
+          <form novalidate class="popup__form" name="new-place">
             <input
               aria-label="Place name"
               type="text"
@@ -89,7 +109,13 @@
               class="popup__input popup__input_type_card-name"
               placeholder="Название"
               required
+              id="place-name"
+              minlength="2"
+              maxlength="30"
+              pattern="[a-zA-Z\s\-а-яёА-ЯË]*"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
             />
+            <span class="form__input-error place-name-error"></span>
             <input
               aria-label="Capture adress"
               type="url"
@@ -97,7 +123,9 @@
               class="popup__input popup__input_type_url"
               placeholder="Ссылка на картинку"
               required
+              id="url-adress"
             />
+            <span class="form__input-error url-adress-error"></span>
             <button
               aria-label="Save"
               type="submit"
@@ -120,6 +148,27 @@
         </div>
       </div>
     </div>
+    <div class="popup popup_type_avatar">
+      <div class="popup__content">
+        <button aria-label="Close" type="button" class="popup__close"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form novalidate class="popup__form" name="new-avatar">
+          <input
+            aria-label="Avatar adress"
+            type="url"
+            name="link"
+            class="popup__input popup__input_type_url"
+            placeholder="Ссылка на аватар"
+            required
+            id="url-avatar"
+          />
+          <span class="form__input-error url-avatar-error"></span>
+          <button aria-label="Save" type="submit" class="button popup__button">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
 
     <template id="card-template">
       <li class="places__item card">
@@ -131,11 +180,14 @@
         ></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
-          <button
-            aria-label="Like"
-            type="button"
-            class="card__like-button"
-          ></button>
+          <div class="card__likes">
+            <button
+              aria-label="Like"
+              type="button"
+              class="card__like-button"
+            ></button>
+            <span class="card__likes-counter"></span>
+          </div>
         </div>
       </li>
     </template>
