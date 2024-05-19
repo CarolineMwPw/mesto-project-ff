@@ -108,6 +108,7 @@ function handleCardAdd(evt) {
       placesContainer.prepend(
         createCard(data, deleteCard, toggleLike, openImage, data.owner)
       );
+
       closeModal(popupNewCard);
       // closeModal(openedPopUp);
     })
@@ -135,7 +136,6 @@ function showingProfileInfo(user) {
 // Обработчик Функция открытия профиля
 
 editButton.addEventListener("click", function () {
-  clearValidation(popupEditProfile, validationConfig);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
 
@@ -184,7 +184,7 @@ function changeProfileImage(evt, link) {
     .finally(() => {
       evt.submitter.textContent = "Сохранить";
     });
-  evt.target.reset();
+  // evt.target.reset();
 }
 
 // Открытие попапа с картинкой
