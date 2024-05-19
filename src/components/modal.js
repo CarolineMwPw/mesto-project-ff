@@ -1,24 +1,10 @@
-import { clearValidation, validationConfig } from "./validation";
-
-import {
-  apiConfig,
-  getInfoProfile,
-  fillProfileData,
-  getCards,
-  addCard,
-  like,
-  removeLike,
-  removeCard,
-  changeAvatar,
-} from "./api";
-
 // Функция открытия карточки
 
 export function openModal(window) {
-  const form = window.querySelector(validationConfig.formSelector);
-  if (window.querySelector(validationConfig.inputSelector)) {
-    clearValidation(form, validationConfig);
-  }
+  // const form = window.querySelector(validationConfig.formSelector);
+  // if (window.querySelector(validationConfig.inputSelector)) {
+  //   clearValidation(form, validationConfig);
+  // }
   window.classList.add("popup_is-opened");
 
   document.addEventListener("keydown", keyPress);
@@ -46,12 +32,10 @@ export function keyPress(evt) {
 // Закрытие попапов при нажатии оверлея либо кнопки закрытия
 
 export function closePopupByOverlay(evt) {
-  // item.addEventListener("click", function (evt) {
   if (
     evt.target.classList.contains("popup") ||
     evt.target.classList.contains("popup__close")
   ) {
     closeModal(evt.currentTarget);
   }
-  // });
 }

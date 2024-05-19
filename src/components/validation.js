@@ -1,12 +1,3 @@
-export const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
 export function showError(form, input, errorMessage, config) {
   const errorEl = form.querySelector(`.${input.id}-error`);
 
@@ -22,50 +13,15 @@ export const hideError = (form, input, config) => {
   errorEl.textContent = "";
 };
 
-// formProfileInput.addEventListener("input", function () {
-//   checkingInputValidity(formProfile, formProfileInput);
-// });
-
-const forbidden = /[^a-zA-Z\s\-а-яА-Я]/g;
-
-// function hasMatchRegex(inputs) {
-//   return inputs.some((input) => {
-//     if (input.value.match(forbidden)) {
-// input.setCustomValidity(
-//   "Поля могут содержать только латинские и кириллические буквы, знаки дефиса и пробелы."
-// );
-//       return !input.validity.pattern;
-//     }
-//   });
-// }
+// const forbidden = /[^a-zA-Z\s\-а-яА-Я]/g;
 
 export function hasInvalidInput(inputs) {
-  // return inputs.some((input) => {
-  //   if (input.value.match(forbidden)) {
-
-  //     return !input.validity.pattern;
-  //   } else {
-  //     return !input.validity.valid;
-  //   }
-  // });
-
   return inputs.some((input) => {
     return !input.validity.valid || input.validity.patternMismatch;
   });
 }
 
 export function checkingInputValidity(form, input, config) {
-  // if (!input.validity.pattern) {
-  //   input.setCustomValidity(
-  //     "Поля могут содержать только латинские и кириллические буквы, знаки дефиса и пробелы."
-  //   );
-  //   showError(form, input, input.validationMessage);
-  // } else {
-  //   input.setCustomValidity("");
-
-  //   hideError(form, input);
-  // }
-
   if (input.validity.patternMismatch) {
     input.setCustomValidity(input.dataset.errorMessage);
   } else {
@@ -102,8 +58,6 @@ function setEventListeners(form, config) {
   });
 }
 
-// setEventListeners(formProfile);
-
 export function enableValidation(config) {
   const forms = Array.from(document.querySelectorAll(config.formSelector));
   forms.forEach((form) => {
@@ -121,4 +75,5 @@ export function clearValidation(form, config) {
   inputs.forEach((input) => {
     hideError(form, input, config);
   });
+  form.reset();
 }

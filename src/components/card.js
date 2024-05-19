@@ -1,28 +1,10 @@
 // @todo: Функция создания карточки
 
-import {
-  mainContent,
-  placesContainer,
-  cardTemplate,
-  popupNewCard,
-  popUpImage,
-  openImage,
-  handleCardAdd,
-} from "..";
+import { like, removeLike, removeCard } from "./api";
 
-import { closeModal } from "./modal";
+// @todo: Темплейт карточки
 
-import {
-  apiConfig,
-  getInfoProfile,
-  fillProfileData,
-  getCards,
-  addCard,
-  like,
-  removeLike,
-  removeCard,
-  changeAvatar,
-} from "./api";
+const cardTemplate = document.querySelector("#card-template").content;
 
 export function createCard(card, deleteCard, toggleLike, openImage, user) {
   const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
@@ -53,6 +35,10 @@ export function createCard(card, deleteCard, toggleLike, openImage, user) {
   const likesCounter = cardItem.querySelector(".card__likes-counter");
 
   likesCounter.textContent = card.likes.length === 0 ? "" : card.likes.length;
+
+  if (card.likes.some((like) => like._id === userId)) {
+    likeButton.classList.add("card__like-button_is-active");
+  }
 
   cardItem.id = card._id;
 
@@ -93,13 +79,12 @@ export function deleteCard(card) {
 
 export function toggleLike(evt, card) {
   const likesCounter = evt.target.nextElementSibling;
-  console.log(likesCounter);
 
   if (evt.target.classList.contains("card__like-button_is-active")) {
     removeLike(card._id)
       .then((res) => {
         console.log(res);
-        evt.target.classList.toggle("card__like-button_is-active");
+        evt.target.classList.remove("card__like-button_is-active");
         likesCounter.textContent =
           res.likes.length === 0 ? "" : res.likes.length;
       })
@@ -110,7 +95,7 @@ export function toggleLike(evt, card) {
     like(card._id)
       .then((res) => {
         console.log(res);
-        evt.target.classList.toggle("card__like-button_is-active");
+        evt.target.classList.add("card__like-button_is-active");
         likesCounter.textContent =
           res.likes.length === 0 ? "" : res.likes.length;
       })
