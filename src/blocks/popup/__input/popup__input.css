@@ -51,3 +51,16 @@
   left: 36px;
   bottom: 115px;
 }
+
+.popup__input_type_name + .popup__error_visible {
+  position: absolute;
+  margin-top: -6px;
+  width: calc(100% - 72px);
+}
+
+.popup__input_type_description + .popup__error_visible {
+  position: absolute;
+  left: 36px;
+  bottom: 102px;
+  width: calc(100% - 72px);
+}

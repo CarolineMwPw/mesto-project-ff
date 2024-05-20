@@ -20,7 +20,7 @@ import {
 
 // @todo: DOM узлы
 
-export const validationConfig = {
+const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
@@ -73,7 +73,7 @@ const popupAvatar = document.querySelector(".popup_type_avatar");
 
 const formPopupAvatar = popupAvatar.querySelector(".popup__form");
 
-const avatarInput = popupAvatar.querySelector(".popup__input_type_url");
+const avatarInput = popupAvatar.querySelector(".popup__input_type_url_avatar");
 
 const profileSection = document.querySelector(".profile");
 
@@ -136,6 +136,7 @@ function showingProfileInfo(user) {
 // Обработчик Функция открытия профиля
 
 editButton.addEventListener("click", function () {
+  clearValidation(formProfile, validationConfig);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
 
@@ -153,7 +154,8 @@ function handleFormProfileSubmit(evt) {
   fillProfileData(name, job)
     .then((data) => {
       showingProfileInfo(data);
-      closeModal(openedPopUp);
+
+      closeModal(popupEditProfile);
     })
     .catch((err) => {
       console.log(`Ошибка сохранения изменений профиля: ${err}`);
@@ -162,7 +164,7 @@ function handleFormProfileSubmit(evt) {
       evt.submitter.textContent = "Сохранить";
     });
 
-  const openedPopUp = document.querySelector(".popup_is-opened");
+  // const openedPopUp = document.querySelector(".popup_is-opened");
 }
 
 // Функция обновления аватара пользователя
