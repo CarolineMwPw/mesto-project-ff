@@ -69,11 +69,11 @@ export function enableValidation(config) {
 }
 
 export function clearValidation(form, config) {
+  form.reset();
   const inputs = Array.from(form.querySelectorAll(config.inputSelector));
   const buttonElement = form.querySelector(config.submitButtonSelector);
   modeButton(inputs, buttonElement, config);
   inputs.forEach((input) => {
     hideError(form, input, config);
   });
-  form.reset();
 }
