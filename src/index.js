@@ -186,7 +186,7 @@ function changeProfileImage(evt, link) {
     .finally(() => {
       evt.submitter.textContent = "Сохранить";
     });
-  // evt.target.reset();
+  evt.target.reset();
 }
 
 // Открытие попапа с картинкой
